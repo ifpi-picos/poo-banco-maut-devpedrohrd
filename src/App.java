@@ -3,15 +3,14 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         int opcao;
-        int opt = 0;
+        int opt;
         Scanner prompt = new Scanner(System.in);
-        Cliente cliente = new Cliente(null, null, null, null);
-        Sistema sistema = new Sistema(null, cliente);
-        Conta conta = new Conta(null, null, opt, cliente);
+        Cliente cliente = new Cliente("Pedro", "1234567891", "26/12/2002", "Rua Mato Grosso");
+        Conta conta = new Conta("2780", "0008595", 0, cliente);
 
         do {
             System.out.println("****** MENU BANCO MAUT ******");
-            System.out.println("1) CADASTRAR CLIENTE");
+            System.out.println("1) INFORMACOES DO CLIENTE");
             System.out.println("2) OPERACOES");
             System.out.println("0) SAIR");
             System.out.print("Digite uma opcao ->");
@@ -20,8 +19,11 @@ public class App {
 
             switch (opcao) {
                 case 1:
-                    Cliente novoCliente = cliente.cadastraCliente();
-                    sistema.addClientesLista(novoCliente);
+                    System.out.println("***** INFORMACOES DOS CLIENTES *****");
+                    System.out.println("Nome -> " + cliente.getNomeCliente() +
+                            "\nCPF ->" + cliente.getCpfCliente() +
+                            "\nData de Nascimento -> " + cliente.getDataNascimento() +
+                            "\nEndereco ->" + cliente.getEndereco());
                     break;
                 case 2:
 
@@ -46,16 +48,31 @@ public class App {
                             conta.depositar(deposito);
                             break;
                         case 3:
-                            System.out.println("Digite o numero da conta destino:");
-                            String numeroConta = prompt.nextLine();
+                            Cliente cliente2 = new Cliente("Paulo", "9876543210", "24/12/2003", "Rua Paisandu");
+                            Conta conta2 = new Conta("2780", "12345", 0, cliente2);
                             System.out.println("Digite o valor da transferencia:");
                             double transferencia = prompt.nextDouble();
-                            conta.transferir(numeroConta, transferencia);
+                            conta.transferir(conta2.getNumeroConta(), transferencia);
+                            System.out
+                                    .println("O cliente " + cliente.getNomeCliente() + " transferiu R$" + transferencia
+                                            + "para a o cliente " + cliente2.getNomeCliente());
                             break;
                         case 4:
-                            sistema.mortrarInformacoes(conta, cliente);
+                            System.out.println("***** INFORMACOES DA CONTA *****");
+                            System.out.println("Agencia -> " + conta.getNumeroAgencia() +
+                                    "\nConta ->" + conta.getNumeroConta() +
+                                    "\nSaldo -> " + conta.getSaldo() +
+                                    "\nCliente ->" + conta.getCliente().getNomeCliente());
+                            break;
+                        default:
+                            throw new RuntimeException("Opção invalida!");
                     }
-
+                    break;
+                case 0:
+                    System.out.println("Obrigado!");
+                    break;
+                default:
+                    throw new RuntimeException("Opção invalida!");
             }
         } while (opcao != 0);
     }

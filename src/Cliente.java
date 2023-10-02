@@ -43,18 +43,4 @@ public class Cliente {
     public void setNomeCliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
     }
-
-    public Cliente cadastraCliente() {
-        System.out.println("Digite o nome do cliente:");
-        String nome = prompt.nextLine();
-        System.out.println("Digite o cpf do cliente:");
-        String cpf = prompt.nextLine();
-        System.out.println("Digite o endereco do cliente:");
-        String endereco = prompt.nextLine();
-        System.out.println("Digite a data de nascimento do cliente:");
-        String dataNascimento = prompt.nextLine();
-
-        Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
-        return cliente;
-    }
 }

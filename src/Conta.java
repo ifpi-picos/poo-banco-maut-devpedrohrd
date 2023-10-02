@@ -15,6 +15,10 @@ public class Conta {
         this.cliente = cliente;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
     public String getNumeroAgencia() {
         return numeroAgencia;
     }
@@ -28,7 +32,7 @@ public class Conta {
     }
 
     public void sacar(double valor) {
-        if (valor <= 0) {
+        if (valor <= 0 || valor > saldo) {
             System.out.println("Digite um valor inteiro positivo !");
         } else {
             saldo += valor;
@@ -49,15 +53,10 @@ public class Conta {
 
     public void transferir(String numeroConta, double valor) {
         if (valor > 0 && valor < saldo) {
-            if (getNumeroConta().equals(numeroConta)) {
-                saldo -= valor;
-                System.out.println("Transferencia realizada com sucesso!!");
-                System.out.println("O cliente " + cliente.getNomeCliente() + " transferiu R$" + valor
-                        + "para a o cliente " + numeroConta);
-            } else {
-                System.out.println("Nao foi possivel realizar a transferencia !!");
-            }
+            saldo -= valor;
+            System.out.println("Transferencia realizada com sucesso!!");
+        } else {
+            System.out.println("Nao foi possivel realizar a transferencia !!");
         }
     }
-
 }
