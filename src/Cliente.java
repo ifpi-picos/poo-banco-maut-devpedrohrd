@@ -1,14 +1,10 @@
-import java.util.Scanner;
-
 public class Cliente {
     private String nomeCliente;
     private String cpfCliente;
     private String dataNascimento;
-    private String endereco;
+    private Endereco endereco;
 
-    Scanner prompt = new Scanner(System.in);
-
-    public Cliente(String nomeCliente, String cpfCliente, String dataNascimento, String endereco) {
+    public Cliente(String nomeCliente, String cpfCliente, String dataNascimento, Endereco endereco) {
         this.endereco = endereco;
         this.cpfCliente = cpfCliente;
         this.dataNascimento = dataNascimento;
@@ -24,7 +20,7 @@ public class Cliente {
         return dataNascimento;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
@@ -36,11 +32,15 @@ public class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
     public void setNomeCliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
+    }
+
+    public void EnderecoCliente() {
+        endereco.exibirEndereco();
     }
 }

@@ -1,18 +1,19 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Conta {
     private String numeroAgencia;
     private String numeroConta;
     private double saldo;
-    private final Cliente cliente;
+    private Cliente cliente;
+    private List<Transacao> transacoes;
 
-    Scanner prompt = new Scanner(System.in);
-
-    public Conta(String numeroAgencia, String numeroConta, double saldo, Cliente cliente) {
+    public Conta(String numeroAgencia, String numeroConta, Cliente cliente, Transacao transacao) {
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
-        this.saldo = saldo;
+        this.saldo = 0.0;
         this.cliente = cliente;
+        this.transacoes = new ArrayList<>();
     }
 
     public Cliente getCliente() {
@@ -38,6 +39,7 @@ public class Conta {
             saldo += valor;
             System.out.println("Saque realizado com sucesso!!");
             System.out.println("O cliente " + cliente.getNomeCliente() + " sacou R$" + valor + "!");
+            transacoes.add(new Transacao("Saque", valor));
         }
     }
 
@@ -48,6 +50,7 @@ public class Conta {
             saldo += valor;
             System.out.println("Deposito realizado com sucesso!!");
             System.out.println("O cliente " + cliente.getNomeCliente() + " depositou R$" + valor + "!");
+            transacoes.add(new Transacao("Deposito", valor));
         }
     }
 
@@ -55,8 +58,18 @@ public class Conta {
         if (valor > 0 && valor < saldo) {
             saldo -= valor;
             System.out.println("Transferencia realizada com sucesso!!");
+            transacoes.add(new Transacao("Transferencia", valor));
         } else {
             System.out.println("Nao foi possivel realizar a transferencia !!");
+        }
+    }
+
+    public void exibirTransacoes() {
+        for (Transacao conta : transacoes) {
+            System.out.println(
+                    "\nTipo ->" + conta.getDescricao() +
+                            "\nValor ->" + conta.getValor() +
+                            "\nData ->" + conta.getData());
         }
     }
 }
