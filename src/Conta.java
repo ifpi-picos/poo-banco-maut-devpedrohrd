@@ -29,17 +29,19 @@ public class Conta {
     }
 
     public double getSaldo() {
+        System.out.println("O saldo atual do cliente " + cliente.getNomeCliente() + " é R$" + saldo);
         return saldo;
     }
 
-    public void sacar(double valor) {
+    public boolean sacar(double valor) {
         if (valor <= 0 || valor > saldo) {
             System.out.println("Digite um valor inteiro positivo !");
+            return false;
         } else {
-            saldo += valor;
-            System.out.println("Saque realizado com sucesso!!");
-            System.out.println("O cliente " + cliente.getNomeCliente() + " sacou R$" + valor + "!");
-            transacoes.add(new Transacao("Saque", valor));
+            saldo -= valor;
+            notificacao("saque", valor);
+            transacoes.add(new Transacao("Saque", -valor));
+            return true;
         }
     }
 
@@ -48,28 +50,39 @@ public class Conta {
             throw new IllegalArgumentException("Digite um valor inteiro positivo !!");
         } else {
             saldo += valor;
-            System.out.println("Deposito realizado com sucesso!!");
-            System.out.println("O cliente " + cliente.getNomeCliente() + " depositou R$" + valor + "!");
+            notificacao("deposito", valor);
             transacoes.add(new Transacao("Deposito", valor));
         }
     }
 
-    public void transferir(String numeroConta, double valor) {
+    public boolean transferir(Conta destino, double valor) {
+
         if (valor > 0 && valor < saldo) {
             saldo -= valor;
-            System.out.println("Transferencia realizada com sucesso!!");
-            transacoes.add(new Transacao("Transferencia", valor));
+            destino.depositar(valor);
+            notificacao("transferencia", valor);
+            transacoes.add(new Transacao("Transferencia para " + destino.numeroConta, -valor));
+            destino.transacoes.add(new Transacao("Transferencia de " + numeroConta, valor));
+            return true;
         } else {
-            System.out.println("Nao foi possivel realizar a transferencia !!");
+            System.out.println("Saldo insuficiente para realizar transferencia!!");
+            System.out.println("O cliente " + cliente.getNomeCliente() + " tentou transferir R$" + valor);
+            System.out.println("Digite um valor abaixo do saldo!");
+            return false;
         }
     }
 
     public void exibirTransacoes() {
         for (Transacao conta : transacoes) {
+            System.out.println("*************");
             System.out.println(
                     "\nTipo ->" + conta.getDescricao() +
                             "\nValor ->" + conta.getValor() +
-                            "\nData ->" + conta.getData());
+                            "\nData ->" + conta.getData() + "\n");
         }
+    }
+
+    public void notificacao(String desc, double val) {
+        System.out.println("O cliente " + getNumeroConta() + " realizou um(a) " + desc + " de R$" + val);
     }
 }
