@@ -4,13 +4,15 @@ public class Endereco {
     private String cep;
     private String cidade;
     private String numero;
+    private String estado;
 
-    public Endereco(String rua, String bairro, String cep, String cidade, String numero) {
+    public Endereco(String rua, String bairro, String cep, String cidade, String numero, String estado) {
         this.rua = rua;
         this.bairro = bairro;
         this.cep = cep;
         this.cidade = cidade;
         this.numero = numero;
+        this.estado = estado;
     }
 
     public String getBairro() {
@@ -33,8 +35,7 @@ public class Endereco {
         return rua;
     }
 
-    public void exibirEndereco() {
-        System.out.println("\nCEP -> " + this.getCep() + "\nRua -> " + getRua() + "\nBairro -> " + getBairro()
-                + "Cidade -> " + getCidade() + "Numero -> " + getNumero());
+    public String getEstado() {
+        return estado;
     }
 }

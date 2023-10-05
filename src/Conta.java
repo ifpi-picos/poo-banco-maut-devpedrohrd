@@ -7,13 +7,24 @@ public class Conta {
     private double saldo;
     private Cliente cliente;
     private List<Transacao> transacoes;
+    private BancoDados dadosContas;
 
-    public Conta(String numeroAgencia, String numeroConta, Cliente cliente, Transacao transacao) {
+    public Conta(String numeroAgencia, String numeroConta, Cliente cliente, Transacao transacao,
+            BancoDados dadosContas) {
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
         this.saldo = 0.0;
         this.cliente = cliente;
         this.transacoes = new ArrayList<>();
+        this.dadosContas = dadosContas;
+    }
+
+    public BancoDados getDadosClientes() {
+        return dadosContas;
+    }
+
+    public List<Transacao> getTransacoes() {
+        return transacoes;
     }
 
     public Cliente getCliente() {
@@ -55,20 +66,20 @@ public class Conta {
         }
     }
 
-    public boolean transferir(Conta destino, double valor) {
+    public void transferir(String numeroConta, double valor) {
+        if (dadosContas.procuraNumeroConta(numeroConta) != null) {
+            if (valor <= 0 || valor > saldo) {
+                System.err.printf("%s: %f\n", "Valor inválido!", valor);
+            } else {
+                saldo -= valor;
+                notificacao("transferencia", valor);
+                Conta contaDestino = dadosContas.procuraNumeroConta(numeroConta);
+                contaDestino.depositar(valor);
+                transacoes.add(new Transacao("Transferencia para a conta " + contaDestino.numeroConta, valor));
+            }
 
-        if (valor > 0 && valor < saldo) {
-            saldo -= valor;
-            destino.depositar(valor);
-            notificacao("transferencia", valor);
-            transacoes.add(new Transacao("Transferencia para " + destino.numeroConta, -valor));
-            destino.transacoes.add(new Transacao("Transferencia de " + numeroConta, valor));
-            return true;
         } else {
-            System.out.println("Saldo insuficiente para realizar transferencia!!");
-            System.out.println("O cliente " + cliente.getNomeCliente() + " tentou transferir R$" + valor);
-            System.out.println("Digite um valor abaixo do saldo!");
-            return false;
+            System.err.printf("%s: %s\n", "A conta destinatario nao existe.", numeroConta);
         }
     }
 
@@ -84,5 +95,11 @@ public class Conta {
 
     public void notificacao(String desc, double val) {
         System.out.println("O cliente " + getNumeroConta() + " realizou um(a) " + desc + " de R$" + val);
+    }
+
+    public void exibirInfoCliente() {
+        System.out.println("\nNome ->" + cliente.getNomeCliente() + "\nCPF ->" + cliente.getCpfCliente()
+                + "\nNumero da conta ->" + numeroConta + "\nNumero da agencia ->" + numeroAgencia + "\nEndereco ->"
+                + cliente.exibirEndereco());
     }
 }
