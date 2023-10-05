@@ -5,7 +5,7 @@ public class Cliente {
     private String cpfCliente;
     private LocalDate dataNascimento;
     private Endereco endereco;
-    private BancoDados dadosClientes;
+    private Sistema dadosClientes;
 
     public Cliente(String nomeCliente, String cpfCliente, LocalDate dataNascimento, Endereco endereco) {
         this.cpfCliente = cpfCliente;

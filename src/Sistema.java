@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BancoDados {
+public class Sistema {
     private List<Conta> contas;
     private List<Cliente> clientes;
     Scanner prompt = new Scanner(System.in);
 
-    public BancoDados() {
+    public Sistema() {
         this.contas = new ArrayList<>();
         this.clientes = new ArrayList<>();
     }
@@ -36,7 +36,6 @@ public class BancoDados {
     public void menu() {
         System.out.println("\n****** MENU BANCO MAUT *****");
         System.out.println("1)Cadastrar cliente");
-        System.out.println("2)Cadastrar conta");
         System.out.println("3)Depositar");
         System.out.println("4)Sacar");
         System.out.println("5)Transferir");
@@ -68,6 +67,12 @@ public class BancoDados {
         ano = prompt.nextInt();
         prompt.nextLine();
 
+        System.out.println("***** CADASTRO CONTA ***** ");
+        System.out.println("Digite o numero da conta:");
+        String numConta = prompt.nextLine();
+        System.out.println("Digite o numero da agencia:");
+        String numAgencia = prompt.nextLine();
+
         if (dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12 && ano >= 1900) {
             dataNascimento = LocalDate.of(ano, mes, dia);
             System.out.println("Deseja adicionar algum endereco?");
@@ -86,12 +91,16 @@ public class BancoDados {
 
                 Endereco endereco = new Endereco(rua, bairro, cep, cidade, numero, cidade);
                 Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
+                Conta conta = new Conta(numAgencia, numConta, cliente);
                 addListaClientes(cliente);
+                addListaContas(conta);
                 return cliente;
             } else if (respostaEndereco.equalsIgnoreCase("nao") || respostaEndereco.equalsIgnoreCase("n")) {
                 Cliente cliente = new Cliente(nome, cpf, dataNascimento, null);
+                Conta conta = new Conta(numAgencia, numConta, cliente);
                 System.out.println("O cliente optou por nao informar o endereco !!");
                 addListaClientes(cliente);
+                addListaContas(conta);
                 return cliente;
             } else {
                 System.out.println("Resposta inválida. Digite 'sim' ou 'nao' para adicionar um endereço.");
@@ -100,28 +109,6 @@ public class BancoDados {
             System.out.println("Data de nascimento inválida. Verifique os valores de dia, mês e ano.");
         }
         return null;
-    }
-
-    /**
-     * @return
-     */
-    public Conta addConta() {
-        System.out.println("Digite o numero da conta:");
-        String numConta = prompt.nextLine();
-        System.out.println("Digite o numero da agencia:");
-        String numAgencia = prompt.nextLine();
-        System.out.println("Digite o nome do cliente:");
-        String nome = prompt.nextLine();
-        System.out.println("Digite o cpf do cliente:");
-        String cpf = prompt.nextLine();
-
-        Cliente cliente = new Cliente(nome, cpf, null, null);
-
-        Conta conta = new Conta(numAgencia, numConta, cliente, null, null);
-        contas.add(conta);
-        System.out.println("Conta cadastrada com sucesso !!");
-        return conta;
-
     }
 
 }

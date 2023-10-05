@@ -7,19 +7,17 @@ public class Conta {
     private double saldo;
     private Cliente cliente;
     private List<Transacao> transacoes;
-    private BancoDados dadosContas;
+    private Sistema dadosContas;
 
-    public Conta(String numeroAgencia, String numeroConta, Cliente cliente, Transacao transacao,
-            BancoDados dadosContas) {
+    public Conta(String numeroAgencia, String numeroConta, Cliente cliente) {
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
         this.saldo = 0.0;
         this.cliente = cliente;
         this.transacoes = new ArrayList<>();
-        this.dadosContas = dadosContas;
     }
 
-    public BancoDados getDadosClientes() {
+    public Sistema getDadosClientes() {
         return dadosContas;
     }
 
