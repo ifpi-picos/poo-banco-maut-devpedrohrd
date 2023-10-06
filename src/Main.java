@@ -8,6 +8,7 @@ public class Main {
         Scanner prompt = new Scanner(System.in);
         Sistema sistema = new Sistema();
         int opcao;
+        Conta conta;
 
         do {
             sistema.menu();
@@ -16,7 +17,7 @@ public class Main {
             switch (opcao) {
                 case 1:
                     System.out.println("***** CADASTRO CONTA-CLIENTE *****");
-                    Conta conta = sistema.addConta();
+                    conta = sistema.addConta();
                     if (conta != null) {
                         sistema.addListaContas(conta);
                     }
@@ -45,13 +46,16 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Digite o numero da conta que deseja realizar o saque :");
-                    String numContaSaque = prompt.nextLine();
+                    String numContaSaque = prompt.next();
                     prompt.nextLine();
 
                     conta = sistema.procuraNumeroConta(numContaSaque);
+                    System.out.println(conta);
+                    System.out.println(numContaSaque);
                     if (conta != null) {
                         System.out.print("Digite o valor a ser sacado : ");
                         double saque = prompt.nextDouble();
+                        prompt.nextLine();
                         if (conta.sacar(saque)) {
                             conta.notificacao("saque", saque);
                             conta.mostrarSaldo();
@@ -64,11 +68,12 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Digite o numero da conta Origem :");
-                    String numContaOrigem = prompt.nextLine();
+                    String numContaOrigem = prompt.next();
                     prompt.nextLine();
 
                     System.out.println("Digite o numero da conta Destino:");
-                    String numContaDestino = prompt.nextLine();
+                    String numContaDestino = prompt.next();
+                    prompt.nextLine();
 
                     System.out.println("Digite o valor da transaferencia:");
                     double transferencia = prompt.nextDouble();
@@ -78,7 +83,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Digite o numero da conta que deseja vizualizar o saldo:");
-                    String numConta = prompt.nextLine();
+                    String numConta = prompt.next();
                     prompt.nextLine();
 
                     conta = sistema.procuraNumeroConta(numConta);
@@ -91,8 +96,8 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Digite o numero da conta para consultar o saldo:");
-                    String numCon = prompt.nextLine();
-
+                    String numCon = prompt.next();
+                    prompt.nextLine();
                     conta = sistema.procuraNumeroConta(numCon);
 
                     if (conta != null) {

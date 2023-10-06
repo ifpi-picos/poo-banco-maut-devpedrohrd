@@ -38,7 +38,7 @@ public class Conta {
             return false;
         } else {
             saldo -= valor;
-            transacoes.add(new Transacao("Saque", -valor));
+            transacoes.add(new Transacao("Saque", valor));
             return true;
         }
     }
