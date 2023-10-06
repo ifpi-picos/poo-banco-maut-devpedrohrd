@@ -5,14 +5,21 @@ public class Cliente {
     private String cpfCliente;
     private LocalDate dataNascimento;
     private Endereco endereco;
-    private Sistema dadosClientes;
+    private Conta conta;
 
     public Cliente(String nomeCliente, String cpfCliente, LocalDate dataNascimento, Endereco endereco) {
         this.cpfCliente = cpfCliente;
         this.nomeCliente = nomeCliente;
         this.dataNascimento = dataNascimento;
-        this.dadosClientes = null;
         this.endereco = endereco;
+    }
+
+    public String getNumConta() {
+        return conta.getNumeroConta();
+    }
+
+    public String getNumAgencia() {
+        return conta.getNumeroAgencia();
     }
 
     public String getCpfCliente() {

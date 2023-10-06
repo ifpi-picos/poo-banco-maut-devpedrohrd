@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class Main {
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner prompt = new Scanner(System.in);
         Sistema sistema = new Sistema();
@@ -12,12 +15,99 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("***** CADASTRO CLIENTE *****");
-                    sistema.addCliente();
+                    System.out.println("***** CADASTRO CONTA-CLIENTE *****");
+                    Conta conta = sistema.addConta();
+                    if (conta != null) {
+                        sistema.addListaContas(conta);
+                    }
+                    break;
+                case 2:
+                    System.out.println("Digite o numero da conta que deseja fazer deposito:");
+                    String numContaDepos = prompt.next();
+                    prompt.nextLine();
+
+                    conta = sistema.procuraNumeroConta(numContaDepos);
+
+                    if (conta != null) {
+                        System.out.print("Digite o valor a ser depositado : ");
+                        double deposito = prompt.nextDouble();
+                        prompt.nextLine();
+
+                        if (conta.depositar(deposito)) {
+                            conta.notificacao("Deposito", deposito);
+                            conta.mostrarSaldo();
+                        } else {
+                            System.out.println("Falha ao realizar deposito !!");
+                        }
+                    } else {
+                        System.out.println("Numero da conta invalido !!");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Digite o numero da conta que deseja realizar o saque :");
+                    String numContaSaque = prompt.nextLine();
+                    prompt.nextLine();
+
+                    conta = sistema.procuraNumeroConta(numContaSaque);
+                    if (conta != null) {
+                        System.out.print("Digite o valor a ser sacado : ");
+                        double saque = prompt.nextDouble();
+                        if (conta.sacar(saque)) {
+                            conta.notificacao("saque", saque);
+                            conta.mostrarSaldo();
+                        } else {
+                            System.out.println("Falha ao realizar o saque !!");
+                        }
+                    } else {
+                        System.out.println("Numero da conta invalido !!");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Digite o numero da conta Origem :");
+                    String numContaOrigem = prompt.nextLine();
+                    prompt.nextLine();
+
+                    System.out.println("Digite o numero da conta Destino:");
+                    String numContaDestino = prompt.nextLine();
+
+                    System.out.println("Digite o valor da transaferencia:");
+                    double transferencia = prompt.nextDouble();
+                    prompt.nextLine();
+
+                    sistema.realizarTransferencia(numContaOrigem, numContaDestino, transferencia);
+                    break;
+                case 5:
+                    System.out.println("Digite o numero da conta que deseja vizualizar o saldo:");
+                    String numConta = prompt.nextLine();
+                    prompt.nextLine();
+
+                    conta = sistema.procuraNumeroConta(numConta);
+
+                    if (conta != null) {
+                        conta.mostrarSaldo();
+                    } else {
+                        System.out.println("Numero da conta invalido !!");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Digite o numero da conta para consultar o saldo:");
+                    String numCon = prompt.nextLine();
+
+                    conta = sistema.procuraNumeroConta(numCon);
+
+                    if (conta != null) {
+                        conta.exibirInfoCliente();
+                        conta.exibirTransacoes();
+                    } else {
+                        System.out.println("Numero da Conta nao encontrada !!");
+                    }
+                    break;
+                case 0:
+                    System.out.println("Saido do Sistema !!");
                     break;
                 default:
                     throw new IllegalArgumentException("Opção inválida!");
             }
-        } while (opcao != 7);
+        } while (opcao != 0);
     }
 }

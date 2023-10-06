@@ -5,27 +5,23 @@ import java.util.Scanner;
 
 public class Sistema {
     private List<Conta> contas;
-    private List<Cliente> clientes;
     Scanner prompt = new Scanner(System.in);
 
     public Sistema() {
         this.contas = new ArrayList<>();
-        this.clientes = new ArrayList<>();
     }
 
     public void addListaContas(Conta conta) {
-        System.out.println("Adicionando conta");
         contas.add(conta);
-    }
-
-    public Cliente addListaClientes(Cliente cliente) {
-        System.out.println("Clinte adicionado ao Banco de Dados !!");
-        clientes.add(cliente);
-        return cliente;
+        System.out.println("Conta adicionada ao Banco de Dados !!");
     }
 
     public Conta procuraNumeroConta(String numeroConta) {
         for (Conta numConta : contas) {
+            System.out.println("numConta->> " + numConta);
+            System.out.println("numeroConta->> " + numeroConta);
+            System.out.println("numConta.getNumeroConta()->> " + numConta.getNumeroConta());
+
             if (numConta.getNumeroConta().equals(numeroConta)) {
                 return numConta;
             }
@@ -36,18 +32,18 @@ public class Sistema {
     public void menu() {
         System.out.println("\n****** MENU BANCO MAUT *****");
         System.out.println("1)Cadastrar cliente");
-        System.out.println("3)Depositar");
-        System.out.println("4)Sacar");
-        System.out.println("5)Transferir");
-        System.out.println("6)Consultar saldo");
-        System.out.println("7)Extrato das transacoes do cliente");
-        System.out.println("8)Sair");
+        System.out.println("2)Depositar");
+        System.out.println("3)Sacar");
+        System.out.println("4)Transferir");
+        System.out.println("5)Consultar saldo");
+        System.out.println("6)Extrato de transacoes");
+        System.out.println("0)Sair");
     }
 
     /**
      * @return
      */
-    public Cliente addCliente() {
+    public Conta addConta() {
 
         String nome, cpf;
         LocalDate dataNascimento;
@@ -90,18 +86,15 @@ public class Sistema {
                 String cidade = prompt.nextLine();
 
                 Endereco endereco = new Endereco(rua, bairro, cep, cidade, numero, cidade);
+                System.out.println("***** CLIENTE CRIADO COM SUCESSO *****");
                 Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
                 Conta conta = new Conta(numAgencia, numConta, cliente);
-                addListaClientes(cliente);
-                addListaContas(conta);
-                return cliente;
+                return conta;
             } else if (respostaEndereco.equalsIgnoreCase("nao") || respostaEndereco.equalsIgnoreCase("n")) {
                 Cliente cliente = new Cliente(nome, cpf, dataNascimento, null);
                 Conta conta = new Conta(numAgencia, numConta, cliente);
                 System.out.println("O cliente optou por nao informar o endereco !!");
-                addListaClientes(cliente);
-                addListaContas(conta);
-                return cliente;
+                return conta;
             } else {
                 System.out.println("Resposta inválida. Digite 'sim' ou 'nao' para adicionar um endereço.");
             }
@@ -111,4 +104,22 @@ public class Sistema {
         return null;
     }
 
+    public void realizarTransferencia(String numContaOrigem, String numContaDestino, double valor) {
+        Conta contaOrigem = this.procuraNumeroConta(numContaDestino);
+        Conta contaDestino = this.procuraNumeroConta(numContaDestino);
+
+        if (contaDestino != null && contaOrigem != null) {
+            if (contaOrigem.sacar(valor)) {
+                contaDestino.depositar(valor);
+                contaOrigem.notificacao("Transferencia", valor);
+                contaDestino.notificacao("Recebimento de transferencia", valor);
+                System.out.println("Transferencia de R$" + valor + " do cliente " + contaOrigem.getNumeroConta()
+                        + "para o cliente " + contaDestino.getNumeroConta() + " realizada com sucesso !!");
+            } else {
+                System.out.println("Falha ao realizar a transferencia !!");
+            }
+        } else {
+            System.out.println("Numero da conta(Origem ou Destino) invalido !!");
+        }
+    }
 }
