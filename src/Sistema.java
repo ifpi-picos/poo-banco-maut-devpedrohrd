@@ -18,10 +18,6 @@ public class Sistema {
 
     public Conta procuraNumeroConta(String numeroConta) {
         for (Conta numConta : contas) {
-            System.out.println("numConta->> " + numConta);
-            System.out.println("numeroConta->> " + numeroConta);
-            System.out.println("numConta.getNumeroConta()->> " + numConta.getNumeroConta());
-
             if (numConta.getNumeroConta().equals(numeroConta)) {
                 return numConta;
             }
