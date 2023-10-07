@@ -23,19 +23,19 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Digite o numero da conta que deseja fazer deposito:");
+                    System.out.println("Digite o numero da conta que deseja realizar um deposito:");
                     String numContaDepos = prompt.next();
                     prompt.nextLine();
 
                     conta = sistema.procuraNumeroConta(numContaDepos);
 
                     if (conta != null) {
-                        System.out.print("Digite o valor a ser depositado : ");
+                        System.out.print("Conta encontrada !! \nDigite o valor a ser depositado : ");
                         double deposito = prompt.nextDouble();
                         prompt.nextLine();
 
                         if (conta.depositar(deposito)) {
-                            conta.notificacao("Deposito", deposito);
+                            conta.notificacao("realizou um deposito ", deposito, conta);
                             conta.mostrarSaldo();
                         } else {
                             System.out.println("Falha ao realizar deposito !!");
@@ -50,14 +50,13 @@ public class Main {
                     prompt.nextLine();
 
                     conta = sistema.procuraNumeroConta(numContaSaque);
-                    System.out.println(conta);
-                    System.out.println(numContaSaque);
+
                     if (conta != null) {
-                        System.out.print("Digite o valor a ser sacado : ");
+                        System.out.print("Conta encontrada !! \nDigite o valor a ser sacado : ");
                         double saque = prompt.nextDouble();
                         prompt.nextLine();
                         if (conta.sacar(saque)) {
-                            conta.notificacao("saque", saque);
+                            conta.notificacao(" realizou um saque ", saque, conta);
                             conta.mostrarSaldo();
                         } else {
                             System.out.println("Falha ao realizar o saque !!");
@@ -75,40 +74,39 @@ public class Main {
                     String numContaDestino = prompt.next();
                     prompt.nextLine();
 
-                    System.out.println("Digite o valor da transaferencia:");
+                    System.out.println("Digite o valor da transferencia:");
                     double transferencia = prompt.nextDouble();
                     prompt.nextLine();
 
                     sistema.realizarTransferencia(numContaOrigem, numContaDestino, transferencia);
                     break;
                 case 5:
-                    System.out.println("Digite o numero da conta que deseja vizualizar o saldo:");
+                    System.out.println("Digite o numero da conta que deseja vizualizar as informacoes do cliente :");
                     String numConta = prompt.next();
                     prompt.nextLine();
 
                     conta = sistema.procuraNumeroConta(numConta);
 
                     if (conta != null) {
-                        conta.mostrarSaldo();
+                        conta.exibirInfoCliente();
                     } else {
                         System.out.println("Numero da conta invalido !!");
                     }
                     break;
                 case 6:
-                    System.out.println("Digite o numero da conta para consultar o saldo:");
+                    System.out.println("Digite o numero da conta para consultar o extrato de transacoes:");
                     String numCon = prompt.next();
                     prompt.nextLine();
                     conta = sistema.procuraNumeroConta(numCon);
 
                     if (conta != null) {
-                        conta.exibirInfoCliente();
                         conta.exibirTransacoes();
                     } else {
                         System.out.println("Numero da Conta nao encontrada !!");
                     }
                     break;
                 case 0:
-                    System.out.println("Saido do Sistema !!");
+                    System.out.println("Saindo do Sistema !!");
                     break;
                 default:
                     throw new IllegalArgumentException("Opção inválida!");

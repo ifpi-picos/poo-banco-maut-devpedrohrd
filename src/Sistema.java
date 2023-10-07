@@ -31,7 +31,7 @@ public class Sistema {
         System.out.println("2)Depositar");
         System.out.println("3)Sacar");
         System.out.println("4)Transferir");
-        System.out.println("5)Consultar saldo");
+        System.out.println("5)Consultar informacoes da conta");
         System.out.println("6)Extrato de transacoes");
         System.out.println("0)Sair");
     }
@@ -95,22 +95,22 @@ public class Sistema {
                 System.out.println("Resposta inválida. Digite 'sim' ou 'nao' para adicionar um endereço.");
             }
         } else {
-            System.out.println("Data de nascimento inválida. Verifique os valores de dia, mês e ano.");
+            System.out.println("Data de nascimento invalida. Verifique os valores de dia, mês e ano.");
         }
         return null;
     }
 
     public void realizarTransferencia(String numContaOrigem, String numContaDestino, double valor) {
-        Conta contaOrigem = this.procuraNumeroConta(numContaDestino);
+        Conta contaOrigem = this.procuraNumeroConta(numContaOrigem);
         Conta contaDestino = this.procuraNumeroConta(numContaDestino);
 
         if (contaDestino != null && contaOrigem != null) {
             if (contaOrigem.sacar(valor)) {
                 contaDestino.depositar(valor);
-                contaOrigem.notificacao("Transferencia", valor);
-                contaDestino.notificacao("Recebimento de transferencia", valor);
-                System.out.println("Transferencia de R$" + valor + " do cliente " + contaOrigem.getNumeroConta()
-                        + "para o cliente " + contaDestino.getNumeroConta() + " realizada com sucesso !!");
+                contaOrigem.notificacao("realizou uma transferencia", valor, contaOrigem);
+                contaDestino.notificacao("recebeu uma de transferencia", valor, contaDestino);
+                System.out.println("Transferencia de R$" + valor + " do cliente " + contaOrigem.getNomeCliente()
+                        + "para o cliente " + contaDestino.getNomeCliente() + " realizada com sucesso !!");
             } else {
                 System.out.println("Falha ao realizar a transferencia !!");
             }

@@ -12,7 +12,7 @@ public class Conta {
         this.numeroAgencia = numeroAgencia;
         this.numeroConta = numeroConta;
         this.saldo = 0.0;
-        this.cliente = new Cliente(numeroAgencia, numeroConta, null, null);
+        this.cliente = cliente;
         this.transacoes = new ArrayList<>();
     }
 
@@ -20,8 +20,8 @@ public class Conta {
         return transacoes;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public String getNomeCliente() {
+        return cliente.getNomeCliente();
     }
 
     public String getNumeroAgencia() {
@@ -65,14 +65,14 @@ public class Conta {
         }
     }
 
-    public void notificacao(String desc, double val) {
-        System.out.println("O cliente " + getNumeroConta() + " realizou um(a) " + desc + " de R$" + val);
+    public void notificacao(String desc, double val, Conta conta) {
+        System.out.println("O cliente " + conta.cliente.getNomeCliente() + " " + desc + " de R$" + val);
     }
 
     public void exibirInfoCliente() {
-        System.out.println("\nNome ->" + cliente.getNomeCliente() + "\nCPF ->" + cliente.getCpfCliente()
-                + "\nNumero da conta ->" + numeroConta + "\nNumero da agencia ->" + numeroAgencia + "\nEndereco ->"
-                + cliente.exibirEndereco());
+        System.out.println("\nNome ->" + this.cliente.getNomeCliente() + "\nCPF ->" + this.cliente.getCpfCliente()
+                + "\nNumero da conta ->" + this.numeroConta + "\nNumero da agencia ->" + this.numeroAgencia
+                + "\nSaldo ->" + this.saldo);
     }
 
     public void mostrarSaldo() {
