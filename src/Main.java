@@ -81,7 +81,7 @@ public class Main {
                     sistema.realizarTransferencia(numContaOrigem, numContaDestino, transferencia);
                     break;
                 case 5:
-                    System.out.println("Digite o numero da conta que deseja vizualizar as informacoes do cliente :");
+                    System.out.println("Digite o numero da conta para vizualizar as informacoes do cliente :");
                     String numConta = prompt.next();
                     prompt.nextLine();
 
