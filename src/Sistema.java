@@ -80,9 +80,10 @@ public class Sistema {
                 String numero = prompt.nextLine();
                 System.out.println("Digite a cidade:");
                 String cidade = prompt.nextLine();
+                System.out.println("Digite o estado:");
+                String estado = prompt.nextLine();
 
-                Endereco endereco = new Endereco(rua, bairro, cep, cidade, numero, cidade);
-                System.out.println("***** CLIENTE CRIADO COM SUCESSO *****");
+                Endereco endereco = new Endereco(rua, bairro, cep, cidade, numero, estado);
                 Cliente cliente = new Cliente(nome, cpf, dataNascimento, endereco);
                 Conta conta = new Conta(numAgencia, numConta, cliente);
                 return conta;

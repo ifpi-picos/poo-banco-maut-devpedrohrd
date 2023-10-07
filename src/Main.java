@@ -20,6 +20,7 @@ public class Main {
                     conta = sistema.addConta();
                     if (conta != null) {
                         sistema.addListaContas(conta);
+                        System.out.println("***** CLIENTE CRIADO COM SUCESSO *****");
                     }
                     break;
                 case 2:

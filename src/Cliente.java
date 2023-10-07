@@ -51,9 +51,8 @@ public class Cliente {
     }
 
     public String exibirEndereco() {
-        return "\nCEP -> " + endereco.getCep() + "\nRua -> " + endereco.getRua() + "\nBairro -> "
-                + endereco.getBairro()
-                + "\nCidade -> " + endereco.getCidade() + "\nNumero -> " + endereco.getNumero() + "\nEstado ->"
-                + endereco.getEstado();
+        return endereco.getRua() + " ,"
+                + endereco.getBairro() + " ," + endereco.getNumero() + " ," + endereco.getCidade() + " ,"
+                + endereco.getEstado() + " ," + endereco.getCep();
     }
 }

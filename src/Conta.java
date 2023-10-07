@@ -73,6 +73,9 @@ public class Conta {
         System.out.println("\nNome ->" + this.cliente.getNomeCliente() + "\nCPF ->" + this.cliente.getCpfCliente()
                 + "\nNumero da conta ->" + this.numeroConta + "\nNumero da agencia ->" + this.numeroAgencia
                 + "\nSaldo ->" + this.saldo);
+        if (cliente.getEndereco() != null) {
+            System.out.println("Endereco : " + cliente.exibirEndereco());
+        }
     }
 
     public void mostrarSaldo() {
