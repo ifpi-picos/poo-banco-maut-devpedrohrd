@@ -111,7 +111,7 @@ public class Sistema {
                 contaOrigem.notificacao("realizou uma transferencia", valor, contaOrigem);
                 contaDestino.notificacao("recebeu uma de transferencia", valor, contaDestino);
                 System.out.println("Transferencia de R$" + valor + " do cliente " + contaOrigem.getNomeCliente()
-                        + "para o cliente " + contaDestino.getNomeCliente() + " realizada com sucesso !!");
+                        + " para o cliente " + contaDestino.getNomeCliente() + " realizada com sucesso !!");
             } else {
                 System.out.println("Falha ao realizar a transferencia !!");
             }
