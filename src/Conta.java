@@ -1,9 +1,10 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Conta {
-    private String numeroAgencia;
-    private String numeroConta;
+    private final String numeroAgencia;
+    private final String numeroConta;
     private double saldo;
     private Cliente cliente;
     private List<Transacao> transacoes;

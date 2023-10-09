@@ -106,6 +106,12 @@ public class Main {
                         System.out.println("Numero da Conta nao encontrada !!");
                     }
                     break;
+                case 7:
+                    System.out.println("Digite o numero da conta para realizar alguma alteracao:");
+                    String nConta = prompt.next();
+                    prompt.nextLine();
+
+                    break;
                 case 0:
                     System.out.println("Saindo do Sistema !!");
                     break;

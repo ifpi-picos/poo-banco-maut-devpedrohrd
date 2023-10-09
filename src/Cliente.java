@@ -2,7 +2,7 @@ import java.time.LocalDate;
 
 public class Cliente {
     private String nomeCliente;
-    private String cpfCliente;
+    private final String cpfCliente;
     private LocalDate dataNascimento;
     private Endereco endereco;
     private Conta conta;
@@ -12,6 +12,14 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
+    }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 
     public String getNumConta() {
