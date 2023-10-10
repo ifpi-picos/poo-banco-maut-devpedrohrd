@@ -21,8 +21,12 @@ public class Conta {
         return transacoes;
     }
 
-    public String getNomeCliente() {
-        return cliente.getNomeCliente();
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public String getNumeroAgencia() {
@@ -73,7 +77,7 @@ public class Conta {
     public void exibirInfoCliente() {
         System.out.println("\nNome ->" + this.cliente.getNomeCliente() + "\nCPF ->" + this.cliente.getCpfCliente()
                 + "\nNumero da conta ->" + this.numeroConta + "\nNumero da agencia ->" + this.numeroAgencia
-                + "\nSaldo ->" + this.saldo);
+                + "\nSaldo ->" + this.saldo + "\nData de nascimento ->" + this.getCliente().getDataNascimento());
         if (cliente.getEndereco() != null) {
             System.out.println("Endereco : " + cliente.exibirEndereco());
         }

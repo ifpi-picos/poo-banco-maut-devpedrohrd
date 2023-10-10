@@ -111,6 +111,12 @@ public class Main {
                     String nConta = prompt.next();
                     prompt.nextLine();
 
+                    conta = sistema.procuraNumeroConta(nConta);
+                    if (conta != null) {
+                        sistema.alterarInfoCliente(conta);
+                    } else {
+                        System.out.println("Numero da Conta nao encontrada !!");
+                    }
                     break;
                 case 0:
                     System.out.println("Saindo do Sistema !!");
