@@ -22,28 +22,20 @@ public class Cliente {
         this.conta = conta;
     }
 
-    public String getNumConta() {
-        return conta.getNumeroConta();
-    }
-
-    public String getNumAgencia() {
-        return conta.getNumeroAgencia();
-    }
-
     public String getCpfCliente() {
-        return cpfCliente;
+        return this.cpfCliente;
     }
 
     public LocalDate getDataNascimento() {
-        return dataNascimento;
+        return this.dataNascimento;
     }
 
     public Endereco getEndereco() {
-        return endereco;
+        return this.endereco;
     }
 
     public String getNomeCliente() {
-        return nomeCliente;
+        return this.nomeCliente;
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {

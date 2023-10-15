@@ -35,8 +35,11 @@ public class Main {
                         double deposito = prompt.nextDouble();
                         prompt.nextLine();
 
-                        if (conta.depositar(deposito)) {
-                            conta.notificacao("realizou um deposito ", deposito, conta);
+                        if (conta.getTipoConta().equals("c")) {
+                            conta.getCorrente().depositarCorrente(deposito);
+                            conta.mostrarSaldo();
+                        } else if (conta.getTipoConta().equals("p")) {
+                            conta.getPoupanca().depositar(deposito);
                             conta.mostrarSaldo();
                         } else {
                             System.out.println("Falha ao realizar deposito !!");
@@ -56,14 +59,15 @@ public class Main {
                         System.out.print("Conta encontrada !! \nDigite o valor a ser sacado : ");
                         double saque = prompt.nextDouble();
                         prompt.nextLine();
-                        if (conta.sacar(saque)) {
-                            conta.notificacao(" realizou um saque ", saque, conta);
+                        if (conta.getTipoConta().equals("c")) {
+                            conta.getCorrente().sacar(saque);
+                            conta.mostrarSaldo();
+                        } else if (conta.getTipoConta().equals("p")) {
+                            conta.getPoupanca().sacar(saque);
                             conta.mostrarSaldo();
                         } else {
-                            System.out.println("Falha ao realizar o saque !!");
+                            System.out.println("Numero da conta invalido !!");
                         }
-                    } else {
-                        System.out.println("Numero da conta invalido !!");
                     }
                     break;
                 case 4:
@@ -102,18 +106,6 @@ public class Main {
 
                     if (conta != null) {
                         conta.exibirTransacoes();
-                    } else {
-                        System.out.println("Numero da Conta nao encontrada !!");
-                    }
-                    break;
-                case 7:
-                    System.out.println("Digite o numero da conta para realizar alguma alteracao:");
-                    String nConta = prompt.next();
-                    prompt.nextLine();
-
-                    conta = sistema.procuraNumeroConta(nConta);
-                    if (conta != null) {
-                        sistema.alterarInfoCliente(conta);
                     } else {
                         System.out.println("Numero da Conta nao encontrada !!");
                     }

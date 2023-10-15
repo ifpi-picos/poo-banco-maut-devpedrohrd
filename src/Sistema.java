@@ -33,7 +33,6 @@ public class Sistema {
         System.out.println("4)Transferir");
         System.out.println("5)Consultar informacoes da conta");
         System.out.println("6)Extrato de transacoes");
-        System.out.println("7)Alterar informacoes do Cliente");
         System.out.println("0)Sair");
     }
 
@@ -85,22 +84,26 @@ public class Sistema {
                 cliente = new Cliente(nome, cpf, dataNascimento, endereco);
 
                 System.out.println("***** CADASTRO CONTA ***** ");
+                System.out.println("Digite o tipo da conta:(C/P)");
+                String tipodeconta = prompt.nextLine();
                 System.out.println("Digite o numero da conta:");
                 String numConta = prompt.nextLine();
                 System.out.println("Digite o numero da agencia:");
                 String numAgencia = prompt.nextLine();
 
-                conta = new Conta(numAgencia, numConta, cliente);
+                conta = new Conta(numAgencia, numConta, cliente, tipodeconta);
                 cliente.setConta(conta);
                 return conta;
             } else if (respostaEndereco.equalsIgnoreCase("nao") || respostaEndereco.equalsIgnoreCase("n")) {
                 cliente = new Cliente(nome, cpf, dataNascimento, null);
                 System.out.println("***** CADASTRO CONTA ***** ");
+                System.out.println("Digite o tipo da conta:(C/P)");
+                String tipodeconta = prompt.nextLine();
                 System.out.println("Digite o numero da conta:");
                 String numConta = prompt.nextLine();
                 System.out.println("Digite o numero da agencia:");
                 String numAgencia = prompt.nextLine();
-                conta = new Conta(numAgencia, numConta, cliente);
+                conta = new Conta(numAgencia, numConta, cliente, tipodeconta);
 
                 cliente.setConta(conta);
                 System.out.println("O cliente optou por nao informar o endereco !!");
@@ -118,91 +121,16 @@ public class Sistema {
         Conta contaOrigem = this.procuraNumeroConta(numContaOrigem);
         Conta contaDestino = this.procuraNumeroConta(numContaDestino);
         if (contaDestino != null && contaOrigem != null) {
-            if (contaOrigem.sacar(valor)) {
-                contaDestino.depositar(valor);
-                contaOrigem.notificacao("realizou uma transferencia", valor, contaOrigem);
-                contaDestino.notificacao("recebeu uma de transferencia", valor, contaDestino);
-                System.out.println(
-                        "Transferencia de R$" + valor + " do cliente " + contaOrigem.getCliente().getNomeCliente()
-                                + " para o cliente " + contaDestino.getCliente().getNomeCliente()
-                                + " realizada com sucesso !!");
+            if (contaOrigem.getTipoConta().equalsIgnoreCase("c")) {
+                contaOrigem.getCorrente().transferirCorrente(contaOrigem, contaDestino, valor);
+            } else if (contaOrigem.getTipoConta().equalsIgnoreCase("p")) {
+                contaOrigem.getPoupanca().transferir(contaOrigem, contaDestino, valor);
             } else {
-                System.out.println("Falha ao realizar a transferencia !!");
+                System.out.println("Tipo de conta invalido para realizar transferencia !! !!");
             }
+
         } else {
-            System.out.println("Numero da conta(Origem ou Destino) invalido !!");
+            System.out.println("Conta (origem ou destino) nao encontrada !!");
         }
-    }
-
-    public void alterarInfoCliente(Conta conta) {
-        boolean exec = true;
-        Cliente cliente = conta.getCliente();
-        do {
-
-            System.out.println("***** MENU DE ALTERACOES *****");
-            System.out.println("1)Alterar nome");
-            System.out.println("2)Alterar data de nascimento");
-            System.out.println("3)Alterar endereco");
-            System.out.println("0)Retornar para o menu principal");
-            int opt = prompt.nextInt();
-
-            switch (opt) {
-                case 1:
-                    System.out.println("Digite o nome do cliente:");
-                    String nome = prompt.nextLine();
-                    prompt.nextLine();
-
-                    cliente = new Cliente(nome, cliente.getCpfCliente(), cliente.getDataNascimento(),
-                            cliente.getEndereco());
-
-                    break;
-                case 2:
-                    System.out.println("Digite o dia do nascimento:");
-                    int dia = prompt.nextInt();
-                    System.out.println("Digite o mes do nascimento:");
-                    int mes = prompt.nextInt();
-                    System.out.println("Digite o ano do nascimento:");
-                    int ano = prompt.nextInt();
-
-                    prompt.nextLine();
-
-                    if (dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12 && ano >= 1900) {
-                        LocalDate novaData = LocalDate.of(ano, mes, dia);
-
-                        cliente = new Cliente(cliente.getNomeCliente(), cliente.getCpfCliente(), novaData,
-                                cliente.getEndereco());
-                    } else {
-                        System.out.println("Data invalida !!");
-                    }
-                    break;
-                case 3:
-                    System.out.println("Digite o nome da rua:");
-                    String rua = prompt.nextLine();
-                    System.out.println("Digite o nome do bairro:");
-                    String bairro = prompt.nextLine();
-                    System.out.println("Digite o CEP:");
-                    String cep = prompt.nextLine();
-                    System.out.println("Digite o numero:");
-                    String numero = prompt.nextLine();
-                    System.out.println("Digite a cidade:");
-                    String cidade = prompt.nextLine();
-                    System.out.println("Digite o estado:");
-                    String estado = prompt.nextLine();
-
-                    Endereco novoEndereco = new Endereco(rua, bairro, cep, cidade, numero, estado);
-
-                    cliente.setEndereco(novoEndereco);
-                    conta.setCliente(cliente);
-                    break;
-                case 0:
-                    System.out.println("Retorndando...");
-                    exec = false;
-                    break;
-                default:
-                    throw new IllegalArgumentException("\nOpcao Invalida!!\n");
-            }
-
-        } while (exec);
-
     }
 }
