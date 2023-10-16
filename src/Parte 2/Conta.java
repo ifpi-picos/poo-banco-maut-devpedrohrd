@@ -72,4 +72,20 @@ public class Conta {
     public void notificacao(String desc, double valor) {
         System.out.println("O cliente " + desc + "de R$" + valor);
     }
+
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
+
+    public void exibirTransacoes() {
+        System.out.println("\n***** Historico de Transacoes *****");
+        for (Transacao conta : transacoes) {
+            System.out.println(
+                    "Tipo ->" + conta.getDescricao() +
+                            "\nValor ->" + conta.getValor() +
+                            "\nData ->" + conta.getData());
+            System.out.println("\n************");
+        }
+    }
+
 }

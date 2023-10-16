@@ -5,6 +5,7 @@ public class Cliente {
     private LocalDate dataNascimento;
     private final String cpf;
     private Endereco endereco;
+    private Conta conta;
 
     public Cliente(String nome, LocalDate dataNascimento, String cpf) {
         this.nome = nome;
@@ -27,4 +28,21 @@ public class Cliente {
     public Endereco getEndereco() {
         return endereco;
     }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void infoCliente() {
+        System.out.println("\nNome ->" + getNome() +
+                "\nCPF ->" + getCpf() +
+                "\nNumeroConta ->" + getConta().getNumeroConta()
+                + "\nNumeroAgencia ->" + getConta().getNumeroAgencia()
+                + "\nSaldo ->" + getConta().getSaldo());
+
+        if (getEndereco() != null) {
+            System.out.println("\nEndereco ->" + getEndereco());
+        }
+    }
+
 }
