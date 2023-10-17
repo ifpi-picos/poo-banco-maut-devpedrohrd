@@ -78,7 +78,7 @@ public class Conta {
     }
 
     public void exibirTransacoes() {
-        System.out.println("\n***** Historico de Transacoes *****");
+        System.out.println("\n***** Extrato de Transacoes da conta " + getNumeroConta() + " *****");
         for (Transacao conta : transacoes) {
             System.out.println(
                     "Tipo ->" + conta.getDescricao() +
