@@ -14,7 +14,6 @@ abstract public class Conta {
         this.numeroConta = numeroConta;
         this.numeroAgencia = numeroAgencia;
         this.cliente = cliente;
-        this.saldo = 0.0;
         this.transacoes = new ArrayList<>();
         this.qtdContas++;
 
@@ -33,7 +32,7 @@ abstract public class Conta {
     }
 
     public void setSaldo(double valor) {
-        this.saldo -= valor;
+        this.saldo = valor;
     }
 
     public Cliente getCliente() {
@@ -43,10 +42,9 @@ abstract public class Conta {
     // Método de deposito
     public boolean depositar(double valor) {
         if (valor > 0) {
-            saldo += valor;
-            System.out.println("Valor depositado: R$" + valor);
+            setSaldo(valor + getSaldo());
             transacoes.add(new Transacao("Deposito", valor));
-            this.enviarNotificacao("Deposito", valor);
+            enviarNotificacao("Deposito", valor);
             return true;
         }
         System.out.println("Nao foi possivel realizar o deposito !!");
@@ -56,17 +54,16 @@ abstract public class Conta {
     // Método de saque
     public boolean sacar(double valor) {
         if (valor < saldo) {
-            saldo -= valor;
-            System.out.println("Valor sacado: R$" + valor);
+            setSaldo(getSaldo() - valor);
+            enviarNotificacao("Saque", valor);
             transacoes.add(new Transacao("Saque", valor));
-            this.enviarNotificacao("Saque", valor);
             return true;
         }
-        if (valor > saldo) {
-            System.out.println("Saldo insuficiente !!");
+        if (saldo < valor) {
+            System.out.println("Valor insuficiente para saque !!");
             return false;
         }
-        System.out.println("Nao foi possivel realizar o saque !!");
+        System.out.println("Nao foi posssivel realizar o saque !!");
         return false;
     }
 
@@ -75,9 +72,10 @@ abstract public class Conta {
         if (this.sacar(valor)) {
             contaDestino.depositar(valor);
             transacoes.add(new Transacao("Transferencia", valor));
-            this.enviarNotificacao("Transferencia", valor);
+            enviarNotificacao("Transferencia", valor);
             return true;
         }
+        System.out.println("Nao foi possivel realizar a transferencia !!");
         return false;
     }
 
@@ -98,5 +96,6 @@ abstract public class Conta {
 
     public void enviarNotificacao(String operacao, double valor) {
         new Notificacao().enviarEmail(operacao, valor);
+        new Notificacao().enviarSmS(operacao, valor);
     }
 }

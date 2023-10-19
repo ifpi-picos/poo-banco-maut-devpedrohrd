@@ -7,10 +7,11 @@ public class Cliente {
     private Endereco endereco;
     private Conta conta;
 
-    public Cliente(String nome, LocalDate dataNascimento, String cpf) {
+    public Cliente(String nome, LocalDate dataNascimento, String cpf, Endereco endereco) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
+        this.endereco = endereco;
     }
 
     public String getCpf() {
@@ -35,13 +36,16 @@ public class Cliente {
 
     public void infoCliente() {
         System.out.println("\nNome ->" + getNome() +
-                "\nCPF ->" + getCpf() +
-                "\nNumeroConta ->" + getConta().getNumeroConta()
-                + "\nNumeroAgencia ->" + getConta().getNumeroAgencia()
-                + "\nSaldo ->" + getConta().getSaldo());
+                "\nCPF ->" + getCpf());
 
         if (getEndereco() != null) {
-            System.out.println("\nEndereco ->" + getEndereco());
+            System.out.println("Endereco ->" + getEndereco().getEndereco() + "\n");
+        }
+        if (getConta() != null) {
+            System.out.println("\nNumero da Conta: " + getConta().getNumeroConta());
+            System.out.println("\nNumero da agencia: " + getConta().getNumeroAgencia());
+            System.out.println("\nSaldo da conta: " + getConta().getSaldo() + "\n");
+
         }
     }
 
