@@ -1,18 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conta {
+abstract public class Conta {
     private final String numeroConta;
     private final String numeroAgencia;
-    private double saldo;
+    protected double saldo;
     private Cliente cliente;
     private List<Transacao> transacoes;
+    public static int qtdContas;
 
-    public Conta(String numeroConta, String numeroAgencia) {
+    // Construtor das contas
+    public Conta(String numeroConta, String numeroAgencia, Cliente cliente) {
         this.numeroConta = numeroConta;
         this.numeroAgencia = numeroAgencia;
+        this.cliente = cliente;
         this.saldo = 0.0;
         this.transacoes = new ArrayList<>();
+        this.qtdContas++;
+
     }
 
     public String getNumeroAgencia() {
@@ -27,28 +32,34 @@ public class Conta {
         return saldo;
     }
 
+    public void setSaldo(double valor) {
+        this.saldo -= valor;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
 
+    // Método de deposito
     public boolean depositar(double valor) {
         if (valor > 0) {
             saldo += valor;
-            System.out.println("Deposito realizado com sucesso !!");
+            System.out.println("Valor depositado: R$" + valor);
             transacoes.add(new Transacao("Deposito", valor));
-            notificacao("realizou um deposito ", valor);
+            this.enviarNotificacao("Deposito", valor);
             return true;
         }
         System.out.println("Nao foi possivel realizar o deposito !!");
         return false;
     }
 
+    // Método de saque
     public boolean sacar(double valor) {
         if (valor < saldo) {
             saldo -= valor;
-            System.out.println("Saque realizado com sucesso !!");
+            System.out.println("Valor sacado: R$" + valor);
             transacoes.add(new Transacao("Saque", valor));
-            notificacao("realizou um saque ", valor);
+            this.enviarNotificacao("Saque", valor);
             return true;
         }
         if (valor > saldo) {
@@ -59,18 +70,15 @@ public class Conta {
         return false;
     }
 
+    // Método de transferência
     public boolean transferir(Conta contaDestino, double valor) {
         if (this.sacar(valor)) {
             contaDestino.depositar(valor);
             transacoes.add(new Transacao("Transferencia", valor));
-            notificacao("realizou uma transferencia ", valor);
+            this.enviarNotificacao("Transferencia", valor);
             return true;
         }
         return false;
-    }
-
-    public void notificacao(String desc, double valor) {
-        System.out.println("O cliente " + desc + "de R$" + valor);
     }
 
     public List<Transacao> getTransacoes() {
@@ -88,4 +96,7 @@ public class Conta {
         }
     }
 
+    public void enviarNotificacao(String operacao, double valor) {
+        new Notificacao().enviarEmail(operacao, valor);
+    }
 }
