@@ -44,7 +44,6 @@ abstract public class Conta {
         if (valor > 0) {
             setSaldo(valor + getSaldo());
             transacoes.add(new Transacao("Deposito", valor));
-            enviarNotificacao("Deposito", valor);
             return true;
         }
         System.out.println("Nao foi possivel realizar o deposito !!");
@@ -55,7 +54,6 @@ abstract public class Conta {
     public boolean sacar(double valor) {
         if (valor < saldo) {
             setSaldo(getSaldo() - valor);
-            enviarNotificacao("Saque", valor);
             transacoes.add(new Transacao("Saque", valor));
             return true;
         }
@@ -72,7 +70,6 @@ abstract public class Conta {
         if (this.sacar(valor)) {
             contaDestino.depositar(valor);
             transacoes.add(new Transacao("Transferencia", valor));
-            enviarNotificacao("Transferencia", valor);
             return true;
         }
         System.out.println("Nao foi possivel realizar a transferencia !!");
@@ -92,10 +89,5 @@ abstract public class Conta {
                             "\nData ->" + conta.getData());
             System.out.println("\n************");
         }
-    }
-
-    public void enviarNotificacao(String operacao, double valor) {
-        new Notificacao().enviarEmail(operacao, valor);
-        new Notificacao().enviarSmS(operacao, valor);
     }
 }
