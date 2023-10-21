@@ -35,6 +35,7 @@ public class Cliente {
     }
 
     public void infoCliente() {
+        System.out.println("******* INFORMACOES DO CLIENTE ********");
         System.out.println("\nNome ->" + getNome() +
                 "\nCPF ->" + getCpf());
 
