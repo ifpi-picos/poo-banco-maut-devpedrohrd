@@ -8,15 +8,28 @@ public abstract class Conta {
     private Cliente cliente;
     private List<Transacao> transacoes;
     public static int qtdContas;
+    private Notificacao notificacao;
 
     // Construtor das contas
-    public Conta(String numeroConta, String numeroAgencia, Cliente cliente) {
+    public Conta(String numeroConta, String numeroAgencia, Cliente cliente, Notificacao notificacao) {
         this.numeroConta = numeroConta;
         this.numeroAgencia = numeroAgencia;
         this.cliente = cliente;
         this.transacoes = new ArrayList<>();
         this.qtdContas++;
+        this.notificacao = notificacao;
+    }
 
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
+
+    public Notificacao getNotificacao() {
+        return notificacao;
+    }
+
+    public void setNotificacao(Notificacao notificacao) {
+        this.notificacao = notificacao;
     }
 
     public String getNumeroAgencia() {
@@ -42,8 +55,9 @@ public abstract class Conta {
     // Método de deposito
     public boolean depositar(double valor) {
         if (valor > 0) {
-            setSaldo(valor + getSaldo());
+            saldo += valor;
             transacoes.add(new Transacao("Deposito", valor));
+            notificacao.enviarNotificacao("Deposito", valor);
             return true;
         }
         System.out.println("Nao foi possivel realizar o deposito !!");
@@ -51,41 +65,17 @@ public abstract class Conta {
     }
 
     // Método de saque
-    public boolean sacar(double valor) {
-        if (valor < saldo) {
-            setSaldo(getSaldo() - valor);
-            transacoes.add(new Transacao("Saque", valor));
-            return true;
-        }
-        if (saldo < valor) {
-            System.out.println("Valor insuficiente para saque !!");
-            return false;
-        }
-        System.out.println("Nao foi posssivel realizar o saque !!");
-        return false;
-    }
+    public abstract boolean sacar(double valor);
 
     // Método de transferência
-    public boolean transferir(Conta contaDestino, double valor) {
-        if (this.sacar(valor)) {
-            contaDestino.depositar(valor);
-            transacoes.add(new Transacao("Transferencia", valor));
-            return true;
-        }
-        System.out.println("Nao foi possivel realizar a transferencia !!");
-        return false;
-    }
-
-    public List<Transacao> getTransacoes() {
-        return transacoes;
-    }
+    public abstract boolean transferir(Conta contaDestino, double valor);
 
     public void exibirTransacoes() {
         System.out.println("\n***** Extrato de Transacoes da conta " + getNumeroConta() + " *****");
         for (Transacao conta : transacoes) {
             System.out.println(
                     "Tipo ->" + conta.getDescricao() +
-                            "\nValor ->" + conta.getValor() +
+                            "\nValor -> R$" + conta.getValor() +
                             "\nData ->" + conta.getData());
             System.out.println("\n************");
         }
