@@ -22,20 +22,20 @@ class ContaCorrente extends Conta {
             if (qtdTrans > 2) {
                 double taxaTrans = (valor * 0.1);
                 super.saldo -= (valor + taxaTrans);
-                System.out.println("Transferencia realizada com sucesso !!\n");
                 destino.saldo += valor;
-                getNotificacao().enviarNotificacao("Transferencia", -valor);
-                getTransacoes().add(new Transacao("Transferencia", -valor));
+                getNotificacao().enviarNotificacao("Transferencia", valor);
+                System.out.println("Transferencia realizada com sucesso !!\n");
+                getTransacoes().add(new Transacao("Transferencia", valor));
                 destino.getTransacoes().add(new Transacao("Recibo transferencia", valor));
                 ++qtdTrans;
                 return true;
             } else {
                 super.saldo -= valor;
                 destino.saldo += valor;
-                System.out.println("Transferencia realizada com sucesso !!\n");
                 getNotificacao().enviarNotificacao("Transferencia", valor);
                 qtdTrans++;
-                getTransacoes().add(new Transacao("Transferencia", -valor));
+                System.out.println("Transferencia realizada com sucesso !!\n");
+                getTransacoes().add(new Transacao("Transferencia", valor));
                 destino.getTransacoes().add(new Transacao("Recibo transferencia", valor));
                 return true;
             }

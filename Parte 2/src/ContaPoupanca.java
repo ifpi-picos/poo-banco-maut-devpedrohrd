@@ -22,8 +22,8 @@ public class ContaPoupanca extends Conta {
         double valorTaxado = valor + (valor * 0.05);
         if (valorTaxado > 0 && valorTaxado <= super.saldo) {
             super.saldo -= valorTaxado;
-            getNotificacao().enviarNotificacao("Saque", -valor);
-            getTransacoes().add(new Transacao("Saque", -valor));
+            getNotificacao().enviarNotificacao("Saque", valor);
+            getTransacoes().add(new Transacao("Saque", valor));
             return true;
         } else {
             System.out.println("Saldo insuficiente ou valor invalido para saque !!");
@@ -39,7 +39,7 @@ public class ContaPoupanca extends Conta {
             super.saldo -= valorTaxado;
             contaDestino.saldo += valor;
             getNotificacao().enviarNotificacao("Transferencia", valor);
-            getTransacoes().add(new Transacao("Transferencia", -valorTaxado));
+            getTransacoes().add(new Transacao("Transferencia", valorTaxado));
             contaDestino.saldo += valor;
             contaDestino.getTransacoes().add(new Transacao("Recibo transferencia ", valor));
             return true;
