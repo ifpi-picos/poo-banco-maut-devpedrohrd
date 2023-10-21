@@ -9,43 +9,33 @@ class ContaCorrente extends Conta {
     }
 
     public double getChequeEspecial() {
-        return this.chequeEspecial + saldo;
+        return this.chequeEspecial + super.saldo;
+    }
+
+    public double getSaldoCorrente() {
+        return super.getSaldo();
     }
 
     @Override
     public boolean transferir(Conta destino, double valor) {
-        if (valor <= chequeEspecial) {
-            super.transferir(destino, valor);
-            System.out.println("Transferencia realizada com sucesso !!\n");
+        if (valor <= getChequeEspecial()) {
             if (qtdTrans > 2) {
                 double taxaTrans = (valor * 0.1);
-                setSaldo(valor + taxaTrans);
+                setSaldo(getChequeEspecial() - (valor + taxaTrans));
+                System.out.println("Transferencia realizada com sucesso !!\n");
+                destino.setSaldo(destino.getSaldo() + valor);
+                return true;
+            } else {
+                setSaldo(getChequeEspecial() - valor);
+                destino.setSaldo(destino.getSaldo() + valor);
+                System.out.println("Transferencia realizada com sucesso !!\n");
+                qtdTrans++;
+                return true;
             }
-            qtdTrans++;
-            return true;
         } else {
+            System.err.println("Valor insuficiente para a transferência!");
             return false;
         }
 
-    }
-
-    @Override
-    public boolean sacar(double valor) {
-        if (valor <= getChequeEspecial()) {
-            super.sacar(valor);
-            System.out.println("Saque de R$" + valor + " realizado com sucesso !!\n");
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean depositar(double valor) {
-        if (valor > 0) {
-            super.depositar(valor);
-            System.out.println("Deposito de R$" + valor + " realizado com sucesso !!\n");
-            return true;
-        }
-        return false;
     }
 }
