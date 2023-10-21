@@ -58,6 +58,7 @@ public abstract class Conta {
             saldo += valor;
             transacoes.add(new Transacao("Deposito", valor));
             notificacao.enviarNotificacao("Deposito", valor);
+            System.out.println("Deposito realizado com sucesso !!");
             return true;
         }
         System.out.println("Nao foi possivel realizar o deposito !!");
