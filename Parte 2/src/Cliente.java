@@ -34,20 +34,4 @@ public class Cliente {
         return conta;
     }
 
-    public void infoCliente() {
-        System.out.println("******* INFORMACOES DO CLIENTE ********");
-        System.out.println("\nNome ->" + getNome() +
-                "\nCPF ->" + getCpf());
-
-        if (getEndereco() != null) {
-            System.out.println("Endereco ->" + getEndereco().getEndereco() + "\n");
-        }
-        if (getConta() != null) {
-            System.out.println("\nNumero da Conta: " + getConta().getNumeroConta());
-            System.out.println("\nNumero da agencia: " + getConta().getNumeroAgencia());
-            System.out.println("\nSaldo da conta: " + getConta().getSaldo() + "\n");
-
-        }
-    }
-
 }
