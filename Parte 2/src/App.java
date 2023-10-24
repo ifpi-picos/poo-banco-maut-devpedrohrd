@@ -74,7 +74,7 @@ public class App {
                 conta1.exibirTransacoes();
 
                 /*
-                 * Teste das operações da Conta Corrente (Saque,deposito,transferencia e extrato
+                 * Teste das operações da Conta Poupança(Saque,deposito,transferencia e extrato
                  * de transações)
                  */
                 ContaPoupanca conta3 = new ContaPoupanca("890", "980", Matheus, new NotificacaoSMS());
