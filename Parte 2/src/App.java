@@ -64,7 +64,7 @@ public class App {
                 conta1.transferir(conta2, 50);
                 System.out.println("\nTransferiu para a conta poupança do cliente2 R$50");
                 System.out.println("O saldo atual: " + conta1.getSaldo());
-                // Tercera transferencia(A partir da terceira há cobrança de taxa !!)
+                // Terceira transferencia(A partir da terceira há cobrança de taxa !!)
                 conta1.transferir(conta2, 50);
                 System.out.println("\nTransferiu para a conta poupança do cliente2 R$50");
                 System.out.println("O saldo atual: R$" + conta1.getSaldo()
