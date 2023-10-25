@@ -56,7 +56,8 @@ class ContaCorrente extends Conta {
             return true;
         }
         if (valor > getChequeEspecial()) {
-            System.err.println("Limite do cheque especial insuficiente para realizar o saque!");
+            System.err.println(
+                    "Limite do cheque especial insuficiente para realizar o saque! Nao foi possivel realizar o saque !!");
             return false;
         }
         System.out.println("Nao foi possivel realizar o saque !!");
