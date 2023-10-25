@@ -40,7 +40,6 @@ public class ContaPoupanca extends Conta {
             contaDestino.saldo += valor;
             getNotificacao().enviarNotificacao("Transferencia", valor);
             getTransacoes().add(new Transacao("Transferencia", valorTaxado));
-            contaDestino.saldo += valor;
             contaDestino.getTransacoes().add(new Transacao("Recibo transferencia ", valor));
             return true;
         } else if (valor < saldo) {

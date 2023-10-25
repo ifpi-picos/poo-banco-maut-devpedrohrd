@@ -73,6 +73,8 @@ public class App {
                 // Exibindo o extrato de transações da conta1
                 conta1.exibirTransacoes();
 
+                System.out.println(
+                                "\nTeste das operações da Conta Poupança(Saque,deposito,transferencia e extrato de transações)\n");
                 /*
                  * Teste das operações da Conta Poupança(Saque,deposito,transferencia e extrato
                  * de transações)
@@ -82,7 +84,7 @@ public class App {
                 conta3.depositar(1000);
                 System.out.println("\nDepositou no cliente2 R$1000 na conta poupança");
                 System.out.println("Saldo Atual: R$" + conta3.getSaldo()
-                                + "(Na conta poupança, cada déposito tem um rendimento de 10% )\n");
+                                + "(Na conta poupança, cada déposito tem um rendimento de 10% !! )\n");
                 // Operação saque
                 conta3.sacar(100);
                 System.out.println("\nSacou R$100 da conta poupança do cliente2");
